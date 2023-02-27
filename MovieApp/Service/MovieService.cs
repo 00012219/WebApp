@@ -14,44 +14,50 @@ namespace MovieApp.Service
             _context = context;
         }
 
-        //this method breaks both DRY as well as SRP principles
-        public bool CreateMovie(string title, string director, int year, string[] actors)
+        public bool CreateMovie(MovieDto movieDto)
         {
-            if (string.IsNullOrEmpty(title))
-            {
-                throw new ArgumentException("Title cannot be empty or null.");
-            }
-            if (string.IsNullOrEmpty(director))
-            {
-                throw new ArgumentException("Director cannot be empty or null.");
-            }
-            if (year < 1900 || year > DateTime.Now.Year)
-            {
-                throw new ArgumentOutOfRangeException("Year must be between 1900 and the current year.");
-            }
-            if (actors == null || actors.Length == 0)
-            {
-                throw new ArgumentException("At least one actor must be specified.");
-            }
+            var movie = MapDtoToMovie(movieDto);
+
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        private Movie MapDtoToMovie(MovieDto movieDto)
+        {
+            ValidateMovieDto(movieDto);
 
             var movie = new Movie
             {
-                Title = title,
-                Director = director,
-                Year = year,
-                Actors = string.Join(",", actors)
+                Title = movieDto.Title,
+                Director = movieDto.Director,
+                Year = movieDto.Year,
+                Actors = string.Join(",", movieDto.Actors)
             };
 
-            try
+            return movie;
+        }
+
+        private void ValidateMovieDto(MovieDto movieDto)
+        {
+            if (string.IsNullOrEmpty(movieDto.Title))
             {
-                _context.Movies.Add(movie);
-                _context.SaveChanges();
-                return true;
+                throw new ArgumentException("Title cannot be empty or null.");
             }
-            catch
+            if (string.IsNullOrEmpty(movieDto.Director))
             {
-                return false;
+                throw new ArgumentException("Director cannot be empty or null.");
+            }
+            if (movieDto.Year < 1900 || movieDto.Year > DateTime.Now.Year)
+            {
+                throw new ArgumentOutOfRangeException("Year must be between 1900 and the current year.");
+            }
+            if (movieDto.Actors == null || movieDto.Actors.Length == 0)
+            {
+                throw new ArgumentException("At least one actor must be specified.");
             }
         }
     }
 }
+
