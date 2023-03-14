@@ -30,7 +30,7 @@ namespace MovieProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MyDatabase")));
+                options.UseSqlServer(Configuration.GetConnectionString("MyDatabase")), ServiceLifetime.Singleton);
             services.AddScoped<IRatingCalculator, SimpleRatingCalculator>();
             services.AddScoped<IMovieService, MovieService>();
 
