@@ -31,5 +31,4 @@ namespace MovieProject.Payload
         [StringLength(100)]
         public string PosterUrl { get; set; }
     }
-
 }
