@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MovieProject.Data;
+using MovieProject.RatingCalc;
 using MovieProject.Service;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace MovieProject
         {
             services.AddDbContext<MyDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MyDatabase")));
-
+            services.AddScoped<IRatingCalculator, SimpleRatingCalculator>();
             services.AddScoped<IMovieService, MovieService>();
 
 
