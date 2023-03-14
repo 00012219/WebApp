@@ -71,6 +71,22 @@ namespace MovieProject.Controllers
             _movieService.DeleteMovie(id);
             return NoContent();
         }
+
+        [HttpGet("{id}/rating/{strategy}")]
+        public ActionResult<double> GetRating(int id, string strategy)
+        {
+            var movie = _movieService.GetMovieById(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var rating = _movieService.CalculateRating(movie, strategy);
+
+            return rating;
+        }
+
     }
 
 

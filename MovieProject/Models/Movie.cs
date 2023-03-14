@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieProject.RatingCalc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,6 +33,22 @@ namespace MovieProject.Models
 
         [StringLength(100)]
         public string PosterUrl { get; set; }
-    }
 
+
+
+        // Add a field to hold the rating calculator
+        private IRatingCalculator _ratingCalculator;
+
+        // Add a property to set the rating calculator
+        public void SetRatingCalculator(IRatingCalculator ratingCalculator)
+        {
+            _ratingCalculator = ratingCalculator;
+        }
+
+        // Calculate the rating using the current rating calculator
+        public double CalculateRating()
+        {
+            return _ratingCalculator.CalculateRating(this);
+        }
+    }
 }

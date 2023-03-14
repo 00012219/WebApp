@@ -15,6 +15,8 @@ namespace MovieProject.Service
         void UpdateMovie(int id, UpdateMovieDto updateMovieDto);
         void DeleteMovie(int id);
         bool MovieExists(int id);
+
+        public double CalculateRating(Movie movie, string strategy);
     }
 
 }

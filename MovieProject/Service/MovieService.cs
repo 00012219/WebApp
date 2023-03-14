@@ -1,9 +1,11 @@
 ﻿using MovieProject.Data;
 using MovieProject.Models;
 using MovieProject.Payload;
+using MovieProject.RatingCalc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieProject.Service
 {
@@ -11,10 +13,12 @@ namespace MovieProject.Service
     public class MovieService : IMovieService
     {
         private readonly MyDbContext _dbContext;
+        private readonly IRatingCalculator _ratingCalculator;
 
-        public MovieService(MyDbContext dbContext)
+        public MovieService(MyDbContext dbContext, IRatingCalculator ratingCalculator)
         {
             _dbContext = dbContext;
+            _ratingCalculator = ratingCalculator;
         }
 
         public IEnumerable<Movie> GetAllMovies()
@@ -74,5 +78,28 @@ namespace MovieProject.Service
         {
             return _dbContext.Movies.Any(m => m.Id == id);
         }
+
+
+        public double CalculateRating(Movie movie, string strategy)
+        {
+            IRatingCalculator ratingCalculator;
+
+            switch (strategy)
+            {
+                case "simple":
+                    ratingCalculator = new SimpleRatingCalculator();
+                    break;
+                case "advanced":
+                    ratingCalculator = new AdvancedRatingCalculator();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid strategy parameter");
+            }
+
+            var rating = ratingCalculator.CalculateRating(movie);
+
+            return rating;
+        }
+
     }
 }
