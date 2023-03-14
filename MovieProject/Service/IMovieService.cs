@@ -1,4 +1,5 @@
 ﻿using MovieProject.Models;
+using MovieProject.Observer;
 using MovieProject.Payload;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace MovieProject.Service
         bool MovieExists(int id);
 
         public double CalculateRating(Movie movie, string strategy);
+
+        void AddObserver(IMovieObserver observer);
+        void RemoveObserver(IMovieObserver observer);
     }
 
 }

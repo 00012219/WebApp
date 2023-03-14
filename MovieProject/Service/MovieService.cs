@@ -1,5 +1,6 @@
 ﻿using MovieProject.Data;
 using MovieProject.Models;
+using MovieProject.Observer;
 using MovieProject.Payload;
 using MovieProject.RatingCalc;
 using System;
@@ -14,6 +15,8 @@ namespace MovieProject.Service
     {
         private readonly MyDbContext _dbContext;
         private readonly IRatingCalculator _ratingCalculator;
+        private readonly List<IMovieObserver> _observers = new List<IMovieObserver>();
+
 
         public MovieService(MyDbContext dbContext, IRatingCalculator ratingCalculator)
         {
@@ -46,6 +49,12 @@ namespace MovieProject.Service
             };
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();
+
+            foreach (var observer in _observers)
+            {
+                observer.Update(movie);
+            }
+
             return movie;
         }
 
@@ -101,5 +110,14 @@ namespace MovieProject.Service
             return rating;
         }
 
+        public void AddObserver(IMovieObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void RemoveObserver(IMovieObserver observer)
+        {
+            _observers.Remove(observer);
+        }
     }
 }
