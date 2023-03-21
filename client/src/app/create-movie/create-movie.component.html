@@ -8,6 +8,13 @@
     </div>
   </div>
   <div>
+    <label for="director">Director:</label>
+    <input type="text" id="director" [formControl]="$any(movieForm.controls['director'])">
+    <div *ngIf="movieForm.controls['director'].invalid && (movieForm.controls['director'].dirty || movieForm.controls['director'].touched)">
+      <div *ngIf="movieForm.controls['director'].errors?.required">Director is required</div>
+    </div>
+  </div>
+  <div>
     <label for="releaseYear">Release year:</label>
     <input type="number" id="releaseYear" [formControl]="$any(movieForm.controls['releaseYear'])">
     <div *ngIf="movieForm.controls['releaseYear'].invalid && (movieForm.controls['releaseYear'].dirty || movieForm.controls['releaseYear'].touched)">

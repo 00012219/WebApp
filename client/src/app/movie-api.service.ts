@@ -11,6 +11,10 @@ export class MovieApiService {
 
   constructor(private http: HttpClient) { }
 
+  getMovieById(id: string): Observable<Movie> {
+    return this.http.get<Movie>(`${this.apiUrl}/${id}`);
+  }
+
   getMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(this.apiUrl);
   }
@@ -18,5 +22,17 @@ export class MovieApiService {
   createMovie(newMovie: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, newMovie);
   }
+
+  deleteMovie(id: number): Observable<{}> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
+
+  updateMovie(movie: Movie) {
+    const url = `${this.apiUrl}/${movie.id}`;
+    console.log("movie object => title:" +  movie.title + " director:" + movie.director + " genre:" + movie.genre + " ");
+    return this.http.put<Movie>(url, movie);
+  }
+
 
 }

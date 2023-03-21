@@ -14,6 +14,7 @@ export class CreateMovieComponent implements OnInit {
   movieForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     releaseYear: new FormControl('', [Validators.required]),
+    director: new FormControl('', [Validators.required]),
     genre: new FormControl('', [Validators.required])
   });
 

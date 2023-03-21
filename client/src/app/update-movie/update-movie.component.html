@@ -1,0 +1,17 @@
+<h2>Edit Movie</h2>
+
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()" *ngIf="movieForm">
+  <label for="title">Title</label>
+  <input formControlName="title" id="title" />
+
+  <label for="releaseDate">releaseDate</label>
+  <input formControlName="releaseDate" id="releaseDate" />
+
+  <label for="director">director</label>
+  <input formControlName="director" id="director" />
+
+  <label for="genre">genre</label>
+  <input formControlName="genre" id="genre" />
+
+  <button type="submit">Update</button>
+</form>
