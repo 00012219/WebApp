@@ -1,0 +1,28 @@
+<h2>Directors List</h2>
+
+<table *ngIf="directors && directors.length">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Birth Date</th>
+      <th>Email</th>
+      <th>Delete</th> <!-- Add new column for delete button -->
+      <th>Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let director of directors">
+      <td>{{ director.firstName }}</td>
+      <td>{{ director.lastName }}</td>
+      <td>{{ director.birthDate | date }}</td>
+      <td>{{director.email}}</td>
+      <td>
+        <button (click)="deleteDirector(director.id)">Delete</button> 
+      </td>
+      <td>
+        <a routerLink="{{director.id}}/edit">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

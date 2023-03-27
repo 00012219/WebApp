@@ -26,7 +26,7 @@ export class UpdateMovieComponent {
       this.movie = movie;
       this.movieForm = this.formBuilder.group({
         title: [this.movie.title, Validators.required],
-        director: [this.movie.director, Validators.required],
+        director: [this.movie.directors[0], Validators.required],
         releaseDate: [this.movie.releaseDate, Validators.required],
         genre: [this.movie.genre, Validators.required]
       });

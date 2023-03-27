@@ -1,0 +1,33 @@
+<h2>Create a new director</h2>
+<form [formGroup]="directorForm" (ngSubmit)="createDirector()">
+  <div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" [formControl]="$any(directorForm.controls['firstName'])">
+    <div class="error" *ngIf="directorForm.controls['firstName'].invalid && (directorForm.controls['firstName'].dirty || directorForm.controls['firstName'].touched)">
+      <div *ngIf="directorForm.controls['firstName'].errors?.required">First Name is required</div>
+    </div>
+  </div>
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" [formControl]="$any(directorForm.controls['lastName'])">
+    <div class="error" *ngIf="directorForm.controls['lastName'].invalid && (directorForm.controls['lastName'].dirty || directorForm.controls['lastName'].touched)">
+      <div *ngIf="directorForm.controls['lastName'].errors?.required">Last name is required</div>
+    </div>
+  </div>
+  <div>
+    <label for="birthDate">Birth Date:</label>
+    <input type="date" id="birthDate" [formControl]="$any(directorForm.controls['birthDate'])">
+    <div
+    class="error" *ngIf="directorForm.controls['birthDate'].invalid && (directorForm.controls['birthDate'].dirty || directorForm.controls['birthDate'].touched)">
+        <div *ngIf="directorForm.controls['birthDate'].errors?.required">Birth Date is required</div>
+    </div>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" [formControl]="$any(directorForm.controls['email'])">
+    <div class="error" *ngIf="directorForm.controls['email'].invalid && (directorForm.controls['email'].dirty || directorForm.controls['email'].touched)">
+      <div *ngIf="directorForm.controls['email'].errors?.required">Email is required</div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="directorForm.invalid">Create</button>
+</form>

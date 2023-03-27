@@ -1,0 +1,17 @@
+<h2>Edit Director</h2>
+
+<form [formGroup]="directorForm" (ngSubmit)="onSubmit()" *ngIf="directorForm">
+  <label for="firstName">First Name</label>
+  <input formControlName="firstName" id="firstname" />
+
+  <label for="lastName">Last Name</label>
+  <input formControlName="lastName" id="lastname" />
+  
+  <label for="birthDate">Birth Date</label>
+  <input type="date" formControlName="birthDate" id="birthDate" />
+
+  <label for="email">Email</label>
+  <input formControlName="email" id="email" />
+
+  <button type="submit">Update</button>
+</form>

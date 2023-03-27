@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from '../movie';
 import { MovieApiService } from '../movie-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { Director } from '../director';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MovieListComponent implements OnInit {
   movies: Movie[] = [];
+  directors: Director[] = [];
 
   constructor(private movieService: MovieApiService,
     private toastr: ToastrService
@@ -18,6 +20,7 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
     this.movieService.getMovies().subscribe(movies => this.movies = movies);
+    this.movieService.getDirectors().subscribe(directors => this.directors = directors);
   }
 
   deleteMovie(id: number): void {

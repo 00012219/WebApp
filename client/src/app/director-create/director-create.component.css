@@ -39,21 +39,6 @@ form {
     background-color: #005fa3;
   }
   
-  label[for="releaseYear"] {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input[type="date"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1.2em;
-    width: 100%;
-    max-width: 200px;
-  }
-
-
   .error {
     color: red;
   }

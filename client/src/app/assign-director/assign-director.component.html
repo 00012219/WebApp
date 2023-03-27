@@ -1,0 +1,16 @@
+<h2>Assign Director to Movie</h2>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="movie">Movie:</label>
+    <select id="movie" name="movie" [(ngModel)]="selectedMovie" required>
+      <option *ngFor="let movie of movies" [ngValue]="movie">{{ movie.title }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="director">Director:</label>
+    <select id="director" name="director" [(ngModel)]="selectedDirector" required>
+      <option *ngFor="let director of directors" [ngValue]="director">{{ director.firstName }}</option>
+    </select>
+  </div>
+  <button type="submit">Assign Director</button>
+</form>

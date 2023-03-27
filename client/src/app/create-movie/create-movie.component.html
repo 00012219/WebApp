@@ -3,28 +3,28 @@
   <div>
     <label for="title">Title:</label>
     <input type="text" id="title" [formControl]="$any(movieForm.controls['title'])">
-    <div *ngIf="movieForm.controls['title'].invalid && (movieForm.controls['title'].dirty || movieForm.controls['title'].touched)">
+    <div class="error" *ngIf="movieForm.controls['title'].invalid && (movieForm.controls['title'].dirty || movieForm.controls['title'].touched)">
       <div *ngIf="movieForm.controls['title'].errors?.required">Title is required</div>
     </div>
   </div>
   <div>
     <label for="director">Director:</label>
     <input type="text" id="director" [formControl]="$any(movieForm.controls['director'])">
-    <div *ngIf="movieForm.controls['director'].invalid && (movieForm.controls['director'].dirty || movieForm.controls['director'].touched)">
+    <div class="error" *ngIf="movieForm.controls['director'].invalid && (movieForm.controls['director'].dirty || movieForm.controls['director'].touched)">
       <div *ngIf="movieForm.controls['director'].errors?.required">Director is required</div>
     </div>
   </div>
   <div>
-    <label for="releaseYear">Release year:</label>
-    <input type="number" id="releaseYear" [formControl]="$any(movieForm.controls['releaseYear'])">
-    <div *ngIf="movieForm.controls['releaseYear'].invalid && (movieForm.controls['releaseYear'].dirty || movieForm.controls['releaseYear'].touched)">
-      <div *ngIf="movieForm.controls['releaseYear'].errors?.required">Release year is required</div>
-    </div>
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" [formControl]="$any(movieForm.controls['releaseDate'])">
+    <div class="error" *ngIf="movieForm.controls['releaseDate'].invalid && (movieForm.controls['releaseDate'].dirty || movieForm.controls['releaseDate'].touched)">
+    <div *ngIf="movieForm.controls['releaseDate'].errors?.required">Release date is required</div>
+</div>
   </div>
   <div>
     <label for="genre">Genre:</label>
     <input type="text" id="genre" [formControl]="$any(movieForm.controls['genre'])">
-    <div *ngIf="movieForm.controls['genre'].invalid && (movieForm.controls['genre'].dirty || movieForm.controls['genre'].touched)">
+    <div class="error" *ngIf="movieForm.controls['genre'].invalid && (movieForm.controls['genre'].dirty || movieForm.controls['genre'].touched)">
       <div *ngIf="movieForm.controls['genre'].errors?.required">Genre is required</div>
     </div>
   </div>

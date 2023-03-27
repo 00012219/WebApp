@@ -1,8 +1,9 @@
+import { Director } from "./director";
+
 export interface Movie {
     id: number;
     title: string;
     releaseDate: string;
-    director: string;
+    directors: Director[];
     genre: string;
   }
-  
