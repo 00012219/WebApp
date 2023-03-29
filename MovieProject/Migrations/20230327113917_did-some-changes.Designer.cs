@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieProject.Data;
 
 namespace MovieProject.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230327113917_did-some-changes")]
+    partial class didsomechanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,12 @@ namespace MovieProject.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("Directors");
                 });
@@ -89,6 +96,13 @@ namespace MovieProject.Migrations
                     b.ToTable("MovieDirectors");
                 });
 
+            modelBuilder.Entity("MovieProject.Models.Director", b =>
+                {
+                    b.HasOne("MovieProject.Models.Movie", null)
+                        .WithMany("Directors")
+                        .HasForeignKey("MovieId");
+                });
+
             modelBuilder.Entity("MovieProject.Models.MovieDirector", b =>
                 {
                     b.HasOne("MovieProject.Models.Director", "Director")
@@ -115,6 +129,8 @@ namespace MovieProject.Migrations
 
             modelBuilder.Entity("MovieProject.Models.Movie", b =>
                 {
+                    b.Navigation("Directors");
+
                     b.Navigation("MovieDirectors");
                 });
 #pragma warning restore 612, 618

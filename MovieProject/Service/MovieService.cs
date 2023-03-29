@@ -1,4 +1,5 @@
-﻿using MovieProject.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieProject.Data;
 using MovieProject.Models;
 using MovieProject.Observer;
 using MovieProject.Payload;
@@ -24,29 +25,38 @@ namespace MovieProject.Service
             _ratingCalculator = ratingCalculator;
         }
 
-        public IEnumerable<Movie> GetAllMovies()
+        public List<MovieDto> GetAll()
         {
-            return _dbContext.Movies.ToList();
-        }
+            var movies = _dbContext.Movies.Include(m => m.MovieDirectors).ThenInclude(md => md.Director).ToList();
 
-        public Movie GetMovieById(int id)
-        {
-            return _dbContext.Movies.Find(id);
-        }
-
-        public Movie CreateMovie(CreateMovieDto createMovieDto)
-        {
-            var movie = new Movie
+            var movieDtos = new List<MovieDto>();
+            foreach (var movie in movies)
             {
-                Title = createMovieDto.Title,
-                ReleaseDate = createMovieDto.ReleaseDate,
-                Description = createMovieDto.Description,
-                Director = createMovieDto.Director,
-                Genre = createMovieDto.Genre,
-                PosterUrl = createMovieDto.PosterUrl,
-                Rating = createMovieDto.Rating,
-                RuntimeMinutes = createMovieDto.RuntimeMinutes
-            };
+                var directors = movie.MovieDirectors.Select(md => md.Director).ToList();
+
+                var movieDto = new MovieDto
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Genre = movie.Genre,
+                    Rating = movie.Rating,
+                    ReleaseDate = movie.ReleaseDate,
+                    Directors = directors
+                };
+
+                movieDtos.Add(movieDto);
+            }
+
+            return movieDtos;
+        }
+
+        public Movie GetById(int id)
+        {
+            return _dbContext.Movies.Include(m => m.MovieDirectors).ThenInclude(md => md.Director).FirstOrDefault(m => m.Id == id);
+        }
+
+        public Movie Create(Movie movie)
+        {
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();
 
@@ -54,33 +64,68 @@ namespace MovieProject.Service
             {
                 observer.Update(movie);
             }
-
             return movie;
+                
         }
 
-        public void UpdateMovie(int id, UpdateMovieDto updateMovieDto)
+        public void Update(int id, Movie movie)
         {
-            var movie = _dbContext.Movies.Find(id);
-            movie.Title = updateMovieDto.Title;
-            movie.ReleaseDate = updateMovieDto.ReleaseDate;
-            movie.PosterUrl = updateMovieDto.PosterUrl;
-            movie.RuntimeMinutes = updateMovieDto.RuntimeMinutes;
-            movie.Rating = updateMovieDto.Rating;
-            movie.Genre = updateMovieDto.Genre;
-            movie.Director = updateMovieDto.Director;
-            movie.Description = updateMovieDto.Description;
-
-            _dbContext.SaveChanges();
+            var existingMovie = _dbContext.Movies.Include(m => m.MovieDirectors).FirstOrDefault(m => m.Id == id);
+            if (existingMovie != null)
+            {
+                existingMovie.Title = movie.Title;
+                existingMovie.Genre = movie.Genre;
+                existingMovie.Rating = movie.Rating;
+                existingMovie.ReleaseDate = movie.ReleaseDate;
+                existingMovie.MovieDirectors = movie.MovieDirectors;
+                _dbContext.SaveChanges();
+            }
         }
 
-        public void DeleteMovie(int id)
+        public void Delete(int id)
         {
             var movie = _dbContext.Movies.Find(id);
             if (movie != null)
             {
+                // Remove MovieDirector records that reference the movie
+                var movieDirectors = _dbContext.MovieDirectors.Where(md => md.MovieId == id);
+                _dbContext.MovieDirectors.RemoveRange(movieDirectors);
+
+
+
+                // Remove Movie record
                 _dbContext.Movies.Remove(movie);
                 _dbContext.SaveChanges();
             }
+        }
+
+
+
+        public Movie AssignDirectorToMovie(int movieId, int directorId)
+        {
+            var movie = _dbContext.Movies.Include(m => m.MovieDirectors).FirstOrDefault(m => m.Id == movieId);
+            var director = _dbContext.Directors.FirstOrDefault(d => d.Id == directorId);
+
+            if (movie == null || director == null)
+            {
+                return null;
+            }
+
+            var movieDirector = new MovieDirector
+            {
+                Movie = movie,
+                Director = director
+            };
+
+            if (movie.MovieDirectors == null)
+            {
+                movie.MovieDirectors = new List<MovieDirector>();
+            }
+
+            movie.MovieDirectors.Add(movieDirector);
+            _dbContext.SaveChanges();
+
+            return movie;
         }
 
         public bool MovieExists(int id)

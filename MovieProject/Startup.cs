@@ -8,11 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MovieProject.Data;
+using MovieProject.Models;
 using MovieProject.RatingCalc;
 using MovieProject.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MovieProject
@@ -30,9 +33,27 @@ namespace MovieProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MyDatabase")), ServiceLifetime.Singleton);
+                options.UseSqlServer(Configuration.GetConnectionString("MyDatabase")), ServiceLifetime.Transient);
             services.AddScoped<IRatingCalculator, SimpleRatingCalculator>();
+            services.AddScoped<IDirectorService, DirectorService>();
             services.AddScoped<IMovieService, MovieService>();
+
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+            
+            services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.IgnoreNullValues = true;
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 
             services.AddControllers();

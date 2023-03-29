@@ -11,7 +11,7 @@ namespace MovieProject.RatingCalc
         public double CalculateRating(Movie movie)
         {
             // Calculate the rating using a more advanced algorithm
-            double rating = (movie.Rating * movie.RuntimeMinutes) / 1000.0;
+            double rating = (movie.Rating) / 1000.0;
             return rating;
         }
     }

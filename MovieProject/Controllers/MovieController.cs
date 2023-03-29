@@ -23,41 +23,38 @@ namespace MovieProject.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MovieDto>> GetAllMovies()
+        public ActionResult<List<MovieDto>> GetAllMovies()
         {
-            var movies = _movieService.GetAllMovies();
-            var movieDtos = movies.Select(m => new MovieDto(m)).ToList();
-            return Ok(movieDtos);
+            var movies = _movieService.GetAll();
+            return Ok(movies);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<MovieDto> GetMovieById(int id)
+        public ActionResult<Movie> GetMovieById(int id)
         {
-            var movie = _movieService.GetMovieById(id);
+            var movie = _movieService.GetById(id);
             if (movie == null)
             {
                 return NotFound();
             }
-            var movieDto = new MovieDto(movie);
-            return Ok(movieDto);
+            return Ok(movie);
         }
 
         [HttpPost]
-        public ActionResult<MovieDto> CreateMovie(CreateMovieDto createMovieDto)
+        public ActionResult<Movie> CreateMovie(Movie createMovieDto)
         {
-            var movie = _movieService.CreateMovie(createMovieDto);
-            var movieDto = new MovieDto(movie);
-            return CreatedAtAction(nameof(GetMovieById), new { id = movie.Id }, movieDto);
+            var movie = _movieService.Create(createMovieDto);
+            return CreatedAtAction(nameof(GetMovieById), new { id = movie.Id }, movie);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateMovie(int id, UpdateMovieDto updateMovieDto)
+        public IActionResult Update(int id, Movie movie)
         {
             if (!_movieService.MovieExists(id))
             {
                 return NotFound();
             }
-            _movieService.UpdateMovie(id, updateMovieDto);
+            _movieService.Update(id, movie);
             return NoContent();
         }
 
@@ -68,14 +65,30 @@ namespace MovieProject.Controllers
             {
                 return NotFound();
             }
-            _movieService.DeleteMovie(id);
+            _movieService.Delete(id);
             return NoContent();
         }
+
+        //assign the specific director to a movie
+        [HttpPost("{movieId}/directors/{directorId}")]
+        public IActionResult AssignDirectorToMovie(int movieId, int directorId)
+        {
+            var movie = _movieService.AssignDirectorToMovie(movieId, directorId);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return CreatedAtAction(nameof(AssignDirectorToMovie), new { movieId, directorId }, movie);
+        }
+
+
 
         [HttpGet("{id}/rating/{strategy}")]
         public ActionResult<double> GetRating(int id, string strategy)
         {
-            var movie = _movieService.GetMovieById(id);
+            var movie = _movieService.GetById(id);
 
             if (movie == null)
             {

@@ -11,7 +11,7 @@ namespace MovieProject.Decorator
         public void Decorate(Movie movie)
         {
             // Add additional behavior to the movie object
-            movie.Director = "Directed by " + movie.Director;
+            //movie.Director = "Directed by " + movie.Director;
         }
     }
 
