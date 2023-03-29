@@ -45,6 +45,8 @@ export class MovieApiService {
   }
 
   createDirector(newDirector: Director): Observable<any> {
+
+    console.log(`${newDirector.firstName} , ${newDirector.lastName} , ${newDirector.email}, ${newDirector.birthDate} `)
     return this.http.post(`${this.directorApiUrl}`, newDirector);
   }
 

@@ -4,5 +4,5 @@ export interface Director {
     lastName: string;
     birthDate: string;
     email: string;
-  }
+}
   
