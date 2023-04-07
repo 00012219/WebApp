@@ -46,6 +46,7 @@ export class UpdateDirectorComponent {
 
     this.movieService.updateDirector(this.director)
       .subscribe(() => {
+        alert("Director is updated successfully!");
         console.log("updated the director data");
       }, error => {
         if(error.status == 400){
