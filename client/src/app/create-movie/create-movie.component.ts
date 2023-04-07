@@ -14,7 +14,7 @@ export class CreateMovieComponent implements OnInit {
   movieForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     releaseDate: new FormControl('', [Validators.required]),
-    director: new FormControl('', [Validators.required]),
+    rating: new FormControl('', [Validators.required]),
     genre: new FormControl('', [Validators.required])
   });
 
@@ -27,11 +27,14 @@ export class CreateMovieComponent implements OnInit {
     this.movieApiService.createMovie(newMovie).subscribe(
       (response) => {
         console.log(response);
-        // TODO: Handle successful response
+        alert('Movie created successfully!');
       },
       (error) => {
-        console.error(error);
-        // TODO: Handle error
+        if(error.status == 400){
+          alert("There are problems with the input fields");
+        }else{
+          alert("Sorry, something went wrong on our server. Please try again later.")
+        }
       }
     );
   }

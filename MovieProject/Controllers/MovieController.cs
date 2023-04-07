@@ -73,14 +73,23 @@ namespace MovieProject.Controllers
         [HttpPost("{movieId}/directors/{directorId}")]
         public IActionResult AssignDirectorToMovie(int movieId, int directorId)
         {
-            var movie = _movieService.AssignDirectorToMovie(movieId, directorId);
-
-            if (movie == null)
+            try
             {
-                return NotFound();
+                var movie = _movieService.AssignDirectorToMovie(movieId, directorId);
+
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+                return CreatedAtAction(nameof(AssignDirectorToMovie), new { movieId, directorId }, movie);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Director could not be assigned to the movie");
             }
 
-            return CreatedAtAction(nameof(AssignDirectorToMovie), new { movieId, directorId }, movie);
+            return null;
+
         }
 
 

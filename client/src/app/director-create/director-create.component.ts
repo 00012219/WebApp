@@ -27,12 +27,16 @@ export class DirectorCreateComponent implements OnInit {
     console.log("new Director");
     this.movieApiService.createDirector(newDirector).subscribe(
       (response) => {
-        console.log(response);
-        // TODO: Handle successful response
+        alert("Director is created successfully!");
       },
       (error) => {
-        console.error(error);
-        // TODO: Handle error
+        if(error.status==400){
+          console.log(error);
+          alert("There are problems with the input fields");
+        }else{
+          console.log(error);
+          alert("Sorry, something went wrong on our server. Please try again later.");
+        }
       }
     );
   }

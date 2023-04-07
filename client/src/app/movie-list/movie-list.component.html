@@ -4,9 +4,10 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Director</th>
+      <th>Directors</th>
       <th>Release Date</th>
       <th>Genre</th>
+      <th>Rating</th>
       <th>Delete</th>
       <th>Update</th>
     </tr>
@@ -21,6 +22,7 @@
       </td>
       <td>{{ movie.releaseDate | date }}</td>
       <td>{{ movie.genre }}</td>
+      <td>{{movie.rating}}/10</td>
       <td>
         <button (click)="deleteMovie(movie.id)">Delete</button>
       </td>

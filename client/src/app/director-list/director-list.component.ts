@@ -1,7 +1,6 @@
 import { Director } from './../director';
 import { Component, OnInit } from '@angular/core';
 import { MovieApiService } from '../movie-api.service';
-import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -12,8 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DirectorListComponent implements OnInit {
   directors: Director[] = [];
 
-  constructor(private movieService: MovieApiService,
-    private toastr: ToastrService
+  constructor(private movieService: MovieApiService
     ) { }
 
   ngOnInit(): void {
@@ -25,10 +23,11 @@ export class DirectorListComponent implements OnInit {
       next: () => {
         // Remove the deleted director from the directors array
         this.directors = this.directors.filter(director => director.id !== id);
+        alert("Successfully deleted the director");
       },
       error: error => {
         console.error('Error deleting director:', error);
-        this.toastr.error('Error deleting director', 'Error');
+        alert('Error deleting director');
       }
     });
   }

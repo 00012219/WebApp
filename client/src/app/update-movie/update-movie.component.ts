@@ -4,15 +4,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../movie';
 
-
 @Component({
   selector: 'app-update-movie',
   templateUrl: './update-movie.component.html',
-  styleUrls: ['./update-movie.component.css']
+  styleUrls: ['./update-movie.component.css'],
 })
 export class UpdateMovieComponent {
-  movieForm! : FormGroup;
-  movie! : Movie;
+  movieForm!: FormGroup;
+  movie!: Movie;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,35 +21,41 @@ export class UpdateMovieComponent {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id')?.toString();
-    this.movieService.getMovieById(id!).subscribe(movie => {
+    this.movieService.getMovieById(id!).subscribe((movie) => {
       this.movie = movie;
       this.movieForm = this.formBuilder.group({
         title: [this.movie.title, Validators.required],
-        director: [this.movie.directors[0], Validators.required],
+        rating: [this.movie.rating, Validators.required],
         releaseDate: [this.movie.releaseDate, Validators.required],
-        genre: [this.movie.genre, Validators.required]
+        genre: [this.movie.genre, Validators.required],
       });
     });
   }
-  
 
   onSubmit() {
     this.movieForm.patchValue({
       title: this.movieForm.value.title,
-      director: this.movieForm.value.director,
+      rating: this.movieForm.value.rating,
       releaseDate: this.movieForm.value.releaseDate,
-      genre: this.movieForm.value.genre
+      genre: this.movieForm.value.genre,
     });
 
     this.movie = Object.assign({}, this.movie, this.movieForm.value);
 
-    this.movieService.updateMovie(this.movie)
-      .subscribe(() => {
-        console.log("updated the movie data");
+    this.movieService.updateMovie(this.movie).subscribe(
+      () => {
+        console.log('updated the movie data');
+        alert('Updated the movie successfully!');
         // handle success
-      }, error => {
-        console.log("there was an error updating the data")
-        // handle error
-      });
+      },
+      (error) => {
+        console.log(error);
+        if(error.status==400){
+          alert("Please carefully enter the input fields")
+        }else{
+          alert("Sorry, something went wrong on our server. Please try again later.")
+        }
+      }
+    );
   }
 }

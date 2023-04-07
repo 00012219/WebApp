@@ -47,10 +47,13 @@ export class UpdateDirectorComponent {
     this.movieService.updateDirector(this.director)
       .subscribe(() => {
         console.log("updated the director data");
-        // handle success
       }, error => {
-        console.log("there was an error updating the data")
-        // handle error
+        if(error.status == 400){
+          alert("There are problems with the input fields");
+        }else{
+          console.log(error);
+          alert("Sorry, something went wrong on our server. Please try again later.");
+        }
       });
   }
 }

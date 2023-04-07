@@ -26,8 +26,14 @@ export class AssignDirectorComponent implements OnInit {
     const movieId = this.selectedMovie.id;
     const directorId = this.selectedDirector.id;
     this.movieService.assignDirectorToMovie(movieId, directorId).subscribe({
-      next: (response) => console.log('Response:', response),
-      error: (error) => console.log('Error:', error)
+      next: (response) => alert("Director is assigned to the movie successfully!"),
+      error: (error) =>{
+        if(error.status == 400){
+          alert("This director is already assigned to this movie!");
+        }else{
+          alert("Sorry, something went wrong on our server. Please try again later.")
+        }
+      }
     });
   }
 }

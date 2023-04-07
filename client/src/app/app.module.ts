@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MovieApiService } from './movie-api.service';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { RouterModule, Routes, ActivatedRoute } from '@angular/router';  // <-- Import the router module
-import { ToastrService } from 'ngx-toastr';
-import { ToastrModule } from 'ngx-toastr'; // Import ToastrModule
 
 
 
@@ -21,9 +19,10 @@ import { UpdateDirectorComponent } from './update-director/update-director.compo
 import { AssignDirectorComponent } from './assign-director/assign-director.component';
 
 
+
 const routes: Routes = [  // <-- Configure the router
-{ path: 'movies', component: MovieListComponent },
-{ path: 'movies/create', component: CreateMovieComponent },
+{path: 'movies', component: MovieListComponent },
+{path: 'movies/create', component: CreateMovieComponent },
 {path:'movies/:id/edit', component: UpdateMovieComponent},
 {path:'directors', component: DirectorListComponent},
 {path:'directors/create', component: DirectorCreateComponent},
@@ -51,9 +50,8 @@ const routes: Routes = [  // <-- Configure the router
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    ToastrModule.forRoot() // Add ToastrModule to imports
   ],
-  providers: [MovieApiService, ToastrService, FormBuilder],
+  providers: [MovieApiService, FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

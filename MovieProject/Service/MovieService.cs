@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieProject.Data;
+using MovieProject.Exceptions;
 using MovieProject.Models;
 using MovieProject.Observer;
 using MovieProject.Payload;
@@ -7,6 +8,7 @@ using MovieProject.RatingCalc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MovieProject.Service
@@ -122,8 +124,16 @@ namespace MovieProject.Service
                 movie.MovieDirectors = new List<MovieDirector>();
             }
 
-            movie.MovieDirectors.Add(movieDirector);
-            _dbContext.SaveChanges();
+            try
+            {
+                movie.MovieDirectors.Add(movieDirector);
+                _dbContext.SaveChanges();
+            }catch(Exception ex)
+            {
+                throw new HttpStatusException(HttpStatusCode.InternalServerError, "An error occurred while assigning the director to the movie.", ex);
+            }
+
+
 
             return movie;
         }

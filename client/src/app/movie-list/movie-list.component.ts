@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Movie } from '../movie';
 import { MovieApiService } from '../movie-api.service';
-import { ToastrService } from 'ngx-toastr';
 import { Director } from '../director';
 
 
@@ -14,8 +13,7 @@ export class MovieListComponent implements OnInit {
   movies: Movie[] = [];
   directors: Director[] = [];
 
-  constructor(private movieService: MovieApiService,
-    private toastr: ToastrService
+  constructor(private movieService: MovieApiService
     ) { }
 
   ngOnInit(): void {
@@ -28,10 +26,11 @@ export class MovieListComponent implements OnInit {
       next: () => {
         // Remove the deleted movie from the movies array
         this.movies = this.movies.filter(movie => movie.id !== id);
+        alert("Successfully deleted the movie")
       },
       error: error => {
         console.error('Error deleting movie:', error);
-        this.toastr.error('Error deleting movie', 'Error');
+        alert('Error deleting movie');
       }
     });
   }
