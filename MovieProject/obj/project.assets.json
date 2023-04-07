@@ -5695,11 +5695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\knormakhmatov\\source\\repos\\00012219\\WebApp\\MovieProject\\MovieProject.csproj",
+      "projectUniqueName": "C:\\Users\\knormakhmatov\\Desktop\\WebApp\\MovieProject\\MovieProject.csproj",
       "projectName": "MovieProject",
-      "projectPath": "C:\\Users\\knormakhmatov\\source\\repos\\00012219\\WebApp\\MovieProject\\MovieProject.csproj",
+      "projectPath": "C:\\Users\\knormakhmatov\\Desktop\\WebApp\\MovieProject\\MovieProject.csproj",
       "packagesPath": "C:\\Users\\knormakhmatov\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\knormakhmatov\\source\\repos\\00012219\\WebApp\\MovieProject\\obj\\",
+      "outputPath": "C:\\Users\\knormakhmatov\\Desktop\\WebApp\\MovieProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "noR7E8ROQtjtrPTCVuFUVe9qppGQF5yf3We9jnBsU0icTYA2i9RAgUaDW26IjfkT1iN7jCbJ15pgvB8pUJg6pw==",
+  "dgSpecHash": "5VB5m4KrOXe+YkaRvO9q55SZ6CYk8Xwcm1RCM80P6aWr1jZEmG/tCf/E4TJ/F1zbB7QoMLSU5bOK8ezqYeU7mA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\knormakhmatov\\source\\repos\\00012219\\WebApp\\MovieProject\\MovieProject.csproj",
+  "projectFilePath": "C:\\Users\\knormakhmatov\\Desktop\\WebApp\\MovieProject\\MovieProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\knormakhmatov\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\knormakhmatov\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
