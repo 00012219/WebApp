@@ -1,5 +1,9 @@
 # WebApp
 
-For client(angular) project: Run "npm install";
+a. Run "npm install";
 
-For backend(dotnet) project: Run "1.Add-Migration initial-migration  2.Update-Database";
+b. Run "1.Add-Migration initial-migration  2.Update-Database";
+
+c. Run CreateDB.sql file inside the project
+
+
